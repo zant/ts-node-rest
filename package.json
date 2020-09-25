@@ -1,0 +1,38 @@
+{
+  "name": "g2i-node-test",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "module": "esnext",
+  "description": "G2i's Node code challenge",
+  "repository": {
+    "url": "https://gist.github.com/gonzachr"
+  },
+  "scripts": {
+    "start": "npm run build && node dist/index.js",
+    "dev": "NODE_ENV=development nodemon --exec ts-node src/index.ts",
+    "test": "NODE_ENV=test jest --config jest.config.json --watch --detectOpenHandles",
+    "build": "tsc",
+    "populate": "NODE_ENV=development ts-node src/scripts/populateDb"
+  },
+  "author": "Gonzalo Rodriguez",
+  "license": "MIT",
+  "dependencies": {
+    "@types/express": "^4.17.8",
+    "express": "^4.17.1",
+    "ts-node": "^9.0.0",
+    "typeorm": "^0.2.26"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.14",
+    "@types/supertest": "^2.0.10",
+    "@typescript-eslint/eslint-plugin": "^4.2.0",
+    "@typescript-eslint/parser": "^4.2.0",
+    "eslint": "^7.9.0",
+    "jest": "^26.4.2",
+    "nodemon": "^2.0.4",
+    "pg": "^8.3.3",
+    "supertest": "^4.0.2",
+    "ts-jest": "^26.3.0",
+    "typescript": "^4.0.3"
+  }
+}
