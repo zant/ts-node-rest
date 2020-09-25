@@ -2,7 +2,10 @@ import { readFileSync } from "fs";
 import { join } from "path";
 import { Acronym } from "../entity/Acronym";
 
-export const seed = async () => {
+export const seed = async (): Promise<void> => {
+  const dbIsNotEmpty = await Acronym.findOne();
+  if (dbIsNotEmpty) return;
+
   try {
     const data = readFileSync(join(__dirname, "../../acronyms.json"), "utf-8");
     const items: Record<string, string>[] = JSON.parse(data);
