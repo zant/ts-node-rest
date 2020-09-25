@@ -10,18 +10,17 @@
 
     "removeComments": true,
     "noImplicitAny": true,
-    "noImplicitReturns": true,
     "esModuleInterop": true,
     "strictNullChecks": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "strictFunctionTypes": true,
     "noImplicitThis": true,
-    // "noUnusedLocals": true,
     "allowSyntheticDefaultImports": true,
     "emitDecoratorMetadata": true,
     "skipLibCheck": true,
     "experimentalDecorators": true,
+    "resolveJsonModule": true
   },
   "exclude": ["node_modules"],
   "include": ["src/**/*.ts"]
