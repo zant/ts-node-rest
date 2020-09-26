@@ -17,12 +17,15 @@ acronym.get("/", async (req: Request, res: Response) => {
 
   try {
     const acronyms = await Acronym.find({
+      order: {
+        acronym: "ASC",
+      },
       skip: from,
       take: limit,
     });
-    res.status(200);
-    res.send("Hi");
-    console.log(acronyms)
+    res.json({
+      acronyms,
+    });
   } catch (e) {
     res.status(400);
     res.json({ error: "Sorry dude" });
