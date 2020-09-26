@@ -8,31 +8,33 @@
     "url": "https://gist.github.com/gonzachr"
   },
   "scripts": {
-    "start": "npm run build && node dist/index.js",
-    "dev": "NODE_ENV=development nodemon --exec ts-node src/index.ts",
+    "start": "NODE_ENV=production npm run build && node dist/server.js",
+    "dev": "NODE_ENV=development nodemon --exec ts-node src/server.ts",
     "test": "NODE_ENV=test jest --config jest.config.json --watch --detectOpenHandles --testTimeout=10000",
     "build": "tsc",
-    "populate": "NODE_ENV=development ts-node src/scripts/populateDb"
+    "populate": "NODE_ENV=development ts-node src/scripts/populateDb",
     "genTest": "ts-node src/scripts/genTest.ts"
   },
   "author": "Gonzalo Rodriguez",
   "license": "MIT",
   "dependencies": {
-    "@types/express": "^4.17.8",
     "express": "^4.17.1",
     "ts-node": "^9.0.0",
-    "typeorm": "^0.2.26"
+    "typeorm": "^0.2.26",
+    "pg": "^8.3.3",
+    "yup": "^0.29.3"
   },
   "devDependencies": {
+    "@types/express": "^4.17.8",
     "@types/jest": "^26.0.14",
     "@types/node": "^14.11.2",
     "@types/supertest": "^2.0.10",
+    "@types/yup": "^0.29.7",
     "@typescript-eslint/eslint-plugin": "^4.2.0",
     "@typescript-eslint/parser": "^4.2.0",
     "eslint": "^7.9.0",
     "jest": "^26.4.2",
     "nodemon": "^2.0.4",
-    "pg": "^8.3.3",
     "supertest": "^4.0.2",
     "ts-jest": "^26.3.0",
     "typescript": "^4.0.3"
