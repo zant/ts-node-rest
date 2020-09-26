@@ -1,15 +1,9 @@
-// Utility functions for testing
-
-// TODO: move this
-type Acronym = {
-  meaning: string;
-  acronym: string;
-};
+import { AcronymObject } from "../types";
 
 export const convertData = (
   arr: Record<string, string>[]
-): (Acronym | undefined)[] => {
-  const acronyms: Acronym[] = [];
+): (AcronymObject | undefined)[] => {
+  const acronyms: AcronymObject[] = [];
   if (arr.length > 0) {
     for (const el of arr) {
       for (const [key, value] of Object.entries(el)) {
@@ -18,12 +12,13 @@ export const convertData = (
     }
   }
   // Sort
-  return acronyms.sort((a: Acronym, b: Acronym) => {
+  return acronyms.sort((a: AcronymObject, b: AcronymObject) => {
     if (b.acronym > a.acronym) return -1;
     return 1;
   });
 };
 
-export const removeId = (arr: Record<string, string>[]): Acronym[] => {
+export const removeIds = (arr: Record<string, string>[]): AcronymObject[] => {
+  if (!arr) return [];
   return arr.map((el) => ({ acronym: el.acronym, meaning: el.meaning }));
 };
