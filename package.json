@@ -13,6 +13,7 @@
     "test": "NODE_ENV=test jest --config jest.config.json --watch --detectOpenHandles --testTimeout=10000",
     "build": "tsc",
     "populate": "NODE_ENV=development ts-node src/scripts/populateDb"
+    "genTest": "ts-node src/scripts/genTest.ts"
   },
   "author": "Gonzalo Rodriguez",
   "license": "MIT",
