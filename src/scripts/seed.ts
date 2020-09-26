@@ -22,7 +22,7 @@ export const seed = async (): Promise<void> => {
       }
     }
     await Promise.all(promises);
-    console.log("Database seeded 🌱✨");
+    if (process.env.NODE_ENV !== "test") console.log("\n Database seeded 🌱✨");
   } catch (e) {
     console.log("Error reading file", e);
   }
