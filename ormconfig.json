@@ -34,6 +34,6 @@
     "database": "g2i-node-gonzachr",
     "synchronize": true,
     "logging": false,
-    "entities": ["src/entity/**/*.ts"]
+    "entities": ["dist/src/entity/**/*.js"]
   }
 ]
