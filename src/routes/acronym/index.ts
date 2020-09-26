@@ -1,10 +1,10 @@
 import { NextFunction, Request, Response, Router } from "express";
 import { Like } from "typeorm";
-import { Acronym } from "../entity/Acronym";
-import { createError } from "../utils/errors";
+import { Acronym } from "../../entity/Acronym";
+import { createError } from "../../utils/errors";
 import * as yup from "yup";
-import { formatYupError } from "../utils/formayYupError";
-import { requiredField } from "../utils/errorMessages";
+import { formatYupError } from "../../utils/formayYupError";
+import { requiredField } from "../../utils/errorMessages";
 
 export const acronym: Router = Router();
 
@@ -63,7 +63,6 @@ acronym.get(
     }
   }
 );
-
 
 const schema = yup.object().shape({
   acronym: yup.string().required(requiredField),

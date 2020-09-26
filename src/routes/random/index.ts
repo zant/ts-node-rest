@@ -1,7 +1,7 @@
 import { Router, Request, Response, NextFunction } from "express";
-import { Acronym } from "../entity/Acronym";
+import { Acronym } from "../../entity/Acronym";
 
-export const random = Router();
+export const random: Router = Router();
 
 random.get(
   "/:count",
