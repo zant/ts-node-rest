@@ -4,7 +4,7 @@ import { createApp } from "../app";
 import { Maybe } from "../types";
 import { createTypeormConn } from "../utils/createTypeormConn";
 import request from "supertest";
-import { requiredField } from "../utils/errorMessages";
+import { requiredField } from "../routes/acronym/errorMessages";
 
 let app: Application;
 let connection: Maybe<Connection>;
