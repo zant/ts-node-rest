@@ -81,6 +81,19 @@ describe("GET /acronym", () => {
     expect(response.body.acronym.acronym).toEqual(data[0]?.acronym);
     expect(response.body.acronym.meaning).toEqual(data[0]?.meaning);
   });
+
+  it("Returns not found error if acronym is not on the DB", async () => {
+    const acronym = "DDILY";
+    const url = `/acronym/${acronym}`;
+    const response = await request(app).get(url);
+    expect(response.status).toEqual(404);
+    expect(response.body.errors).toEqual([
+      {
+        message: "Not found",
+        path: url,
+      },
+    ]);
+  });
 });
 
 afterAll(() => {
