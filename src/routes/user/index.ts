@@ -1,13 +1,19 @@
-import { Response, Request, NextFunction, Router } from "express";
+import { Router, NextFunction, Request, Response } from "express";
 import * as yup from "yup";
 import { User } from "../../entity/User";
 import {
   duplicateEmail,
   emailNotLongEnough,
   invalidEmail,
+  invalidLogin,
   passwordNotLongEnough,
-} from "../../utils/errorMessages";
+} from "./errorMessages";
 import { formatYupError } from "../../utils/formayYupError";
+import bcrypt from "bcryptjs";
+import {
+  createAccessToken,
+  createRefreshToken,
+} from "../../utils/authentication";
 
 export const user: Router = Router();
 
@@ -22,7 +28,7 @@ user.post(
     try {
       await schema.validate(req.body, { abortEarly: false });
     } catch (err) {
-      next(formatYupError(err));
+      next({ errors: formatYupError(err) });
     }
 
     const { email, password } = req.body;
@@ -31,53 +37,42 @@ user.post(
       const userAlreadyExists = await User.findOne({ where: { email } });
 
       if (userAlreadyExists) {
-        next([{ path: "user/register", message: duplicateEmail }]);
+        next({ status: 400, error: new Error(duplicateEmail) });
       }
 
       const user = await User.create({ email, password }).save();
       res.status(201).json({ user });
-    } catch (err) {
-      next(err);
-    }
-  }
-);
-
-user.post(
-  "/register",
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      await schema.validate(req.body, { abortEarly: false });
-    } catch (err) {
-      next(formatYupError(err));
-    }
-
-    const { email, password } = req.body;
-
-    const userAlreadyExists = await User.findOne({ where: { email } });
-
-    if (userAlreadyExists) {
-      next([{ path: "user/register", message: duplicateEmail }]);
-    }
-
-    try {
-      const user = await User.create({ email, password }).save();
-      res.status(201).json({ user });
-    } catch (err) {
-      next(err);
+    } catch (error) {
+      next({ status: 500, error });
     }
   }
 );
 
 user.post("/login", async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const user = await User.findOne({ where: { email: req.body.email } });
+    const { email, password } = req.body;
 
-    if (req?.session?.userId) {
-      req.session.userId = user?.id;
+    const user = await User.findOne({ where: { email: email } });
+
+    if (!user) {
+      next({ status: 401, error: new Error(invalidLogin) });
+      return;
     }
 
-    res.status(200).json({ user });
-  } catch (err) {
-    next(err);
+    const isValid = bcrypt.compare(password, user.password);
+    if (!isValid) {
+      next({ status: 401, error: new Error(invalidLogin) });
+      return;
+    }
+
+    res.cookie("_qid", createRefreshToken(user), {
+      httpOnly: true,
+    });
+
+    const { token, expiryTime } = createAccessToken(user);
+
+    res.status(200).json({ token, expiryTime, user });
+  } catch (error) {
+    next({ status: 500, error });
   }
 });
