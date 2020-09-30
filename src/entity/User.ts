@@ -12,11 +12,14 @@ export class User extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column("varchar", { length: 255 })
+  @Column("varchar", { length: 255, nullable: false })
   email: string;
 
-  @Column("text")
+  @Column("text", { nullable: false })
   password: string;
+
+  @Column("int", { default: 0 })
+  tokenCount: number;
 
   @BeforeInsert()
   async hashPassword(): Promise<void> {
