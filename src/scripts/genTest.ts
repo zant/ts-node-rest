@@ -3,6 +3,7 @@ import { writeFileSync } from "fs";
 import { join } from "path";
 
 const testTemplate = `
+  import request from 'supertest'
   import { Application } from "express";
   import { Connection } from "typeorm";
   import { createApp } from "../app";
