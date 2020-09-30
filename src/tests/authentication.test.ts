@@ -4,7 +4,7 @@ import { Connection } from "typeorm";
 import { createApp } from "../app";
 import { Maybe } from "../types";
 import { createTypeormConn } from "../utils/createTypeormConn";
-import { FORBIDDEN, UNAUTHORIZED } from "../utils/errorUtils";
+import { FORBIDDEN, UNAUTHORIZED } from "../utils/errorMessages";
 import { User } from "../entity/User";
 import { cookieParser } from "../utils/cookieParser";
 import { Acronym } from "../entity/Acronym";
