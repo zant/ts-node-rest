@@ -6,7 +6,7 @@ import {
   createAccessToken,
 } from "../../utils/authentication";
 import { cookieParser } from "../../utils/cookieParser";
-import { AUTH_CONFIG, FORBIDDEN, NOT_FOUND, UNAUTHORIZED } from "../../utils/errorUtils";
+import { AUTH_CONFIG, FORBIDDEN, NOT_FOUND, UNAUTHORIZED } from "../../utils/errorMessages";
 
 export const auth: Router = Router();
 const forbiddenError = { status: 403, error: new Error(FORBIDDEN) };
