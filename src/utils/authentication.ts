@@ -1,7 +1,7 @@
 import { sign, verify } from "jsonwebtoken";
 import { User } from "../entity/User";
 import { Maybe } from "../types";
-import { AUTH_CONFIG } from "../utils/errorUtils";
+import { AUTH_CONFIG } from "./errorMessages";
 
 export const ACCESS_EXPIRY_TIME = "15m";
 export const REFRESH_EXPIRY_TIME = "7d";
