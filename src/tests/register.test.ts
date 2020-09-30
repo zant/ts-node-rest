@@ -9,7 +9,7 @@ import {
   emailNotLongEnough,
   invalidEmail,
   passwordNotLongEnough,
-} from "../utils/errorMessages";
+} from "../routes/user/errorMessages";
 
 let app: Application;
 let connection: Maybe<Connection>;
@@ -33,7 +33,7 @@ describe("Register", () => {
     const userData = { email: "test@test.com", password: "12345" };
     const response = await request(app).post("/user/register").send(userData);
     expect(response.body.errors).toEqual([
-      { path: "user/register", message: duplicateEmail },
+      { path: "/user/register", message: duplicateEmail },
     ]);
   });
 
