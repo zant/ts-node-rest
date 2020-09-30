@@ -6,6 +6,7 @@ export const random: Router = Router();
 random.get(
   "/:count",
   async (req: Request, res: Response, next: NextFunction) => {
+    // TODO: validate that is a number
     const count = req.params.count;
     try {
       const acronyms = await Acronym.createQueryBuilder()
@@ -16,8 +17,8 @@ random.get(
         .getMany();
 
       res.status(200).json({ acronyms });
-    } catch (err) {
-      next(err);
+    } catch (error) {
+      next({ error, status: 500 });
     }
   }
 );

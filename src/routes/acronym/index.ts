@@ -1,13 +1,15 @@
 import { NextFunction, Request, Response, Router } from "express";
 import { Like } from "typeorm";
-import { Acronym } from "../../entity/Acronym";
-import { createError } from "../../utils/errors";
 import * as yup from "yup";
+import { Acronym } from "../../entity/Acronym";
+import { isUserAuthenticated } from "../../middleware/isUserAuthenticated";
+import { NOT_FOUND } from "../../utils/errorMessages";
 import { formatYupError } from "../../utils/formayYupError";
-import { requiredField } from "../../utils/errorMessages";
+import { requiredField } from "./errorMessages";
 
 export const acronym: Router = Router();
 
+// GET
 acronym.get("/", async (req: Request, res: Response, next: NextFunction) => {
   let from = 0;
   let limit = 10;
@@ -45,8 +47,8 @@ acronym.get("/", async (req: Request, res: Response, next: NextFunction) => {
     res.json({
       acronyms,
     });
-  } catch (e) {
-    next(createError("An error ocurred while getting acronyms", 501));
+  } catch (error) {
+    next([{ error, status: 500 }]);
   }
 });
 
@@ -57,13 +59,17 @@ acronym.get(
       const acronym = await Acronym.findOne({
         where: { acronym: req.params.acronym },
       });
+      if (!acronym) {
+        next({ error: new Error(NOT_FOUND) });
+      }
       res.status(200).json({ acronym });
-    } catch (err) {
-      next(createError("An error ocurred", 501, err));
+    } catch (error) {
+      next({ error, status: 500 });
     }
   }
 );
 
+// POST
 const schema = yup.object().shape({
   acronym: yup.string().required(requiredField),
   meaning: yup.string().required(requiredField),
@@ -73,7 +79,7 @@ acronym.post("/", async (req: Request, res: Response, next: NextFunction) => {
   try {
     await schema.validate(req.body, { abortEarly: false });
   } catch (error) {
-    next(formatYupError(error));
+    next({ errors: formatYupError(error) });
   }
 
   const { acronym, meaning } = req.body;
@@ -81,7 +87,59 @@ acronym.post("/", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const created = await Acronym.create({ acronym, meaning }).save();
     res.status(200).json({ acronym: created });
-  } catch (err) {
-    next(err);
+  } catch (error) {
+    next({ error, status: 500 });
   }
 });
+
+// PUT
+acronym.put(
+  "/:acronym",
+  isUserAuthenticated,
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { acronym } = req.params;
+      const savedAcronym = await Acronym.findOne({ where: { acronym } });
+
+      if (!acronym || !savedAcronym) {
+        return next({ error: new Error(NOT_FOUND) });
+      }
+
+      if (req.body?.acronym) {
+        savedAcronym.acronym = req.body?.acronym;
+      }
+
+      if (req.body?.meaning) {
+        savedAcronym.meaning = req.body?.meaning;
+      }
+
+      const newAcronym = await savedAcronym.save();
+      res.status(202).json({
+        acronym: newAcronym,
+      });
+    } catch (error) {
+      next({ error, status: 500 });
+    }
+  }
+);
+
+acronym.delete(
+  "/:acronym",
+  isUserAuthenticated,
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const savedAcronym = await Acronym.findOne({
+        where: { acronym: req.params.acronym },
+      });
+
+      if (!savedAcronym) {
+        return next({ error: NOT_FOUND });
+      }
+
+      await savedAcronym?.remove();
+      res.sendStatus(204);
+    } catch (error) {
+      next({ error, status: 500 });
+    }
+  }
+);
