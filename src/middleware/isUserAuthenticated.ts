@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { getBearerToken, verifyAccessToken } from "../utils/authentication";
-import { AUTH_CONFIG, FORBIDDEN, UNAUTHORIZED } from "../utils/errorUtils";
+import { AUTH_CONFIG, FORBIDDEN, UNAUTHORIZED } from "../utils/errorMessages";
 
 export const isUserAuthenticated = (
   req: Request,
