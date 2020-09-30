@@ -9,10 +9,10 @@ beforeAll(async () => {
 });
 
 describe("Handle errors", () => {
-  it("Returns not found on development", async () => {
-    const response = await request(app).get("/not-a-page");
-    expect(response.status).toBe(404);
-    expect(response.body.message).toBe("Not found");
-    expect(response.body.error).not.toBe({});
+  it("Returns not found on unknown slug", async () => {
+    const path = "/not-a-page";
+    const response = await request(app).get(path);
+    expect(response.status).toEqual(404);
+    expect(response.body.errors).toEqual([{ message: "Not found", path }]);
   });
 });
