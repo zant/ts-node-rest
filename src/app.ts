@@ -52,7 +52,7 @@ export const createApp = async (): Promise<Application> => {
     (err: ServerError, req: Request, res: Response, _next: NextFunction) => {
       res.status(err.status || 404);
       res.json({
-        errors: err.errors || { message: "Not found", path: req.originalUrl },
+        errors: err.errors || [{ message: "Not found", path: req.originalUrl }],
       });
     }
   );
