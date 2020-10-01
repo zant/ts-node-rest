@@ -4,7 +4,7 @@ import { Connection } from "typeorm";
 import acronyms from "../../acronyms.json";
 import { createApp } from "../app";
 import { invalidCount } from "../routes/random/errorMessages";
-import { seed } from "../scripts/seed";
+import { seed } from "../utils/seed";
 import { Maybe } from "../types";
 import { removeIds } from "../utils/convertData";
 import { createTypeormConn } from "../utils/createTypeormConn";

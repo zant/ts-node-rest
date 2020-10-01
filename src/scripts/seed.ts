@@ -1,29 +1,3 @@
-import { readFileSync } from "fs";
-import { join } from "path";
-import { Acronym } from "../entity/Acronym";
+import { seed } from "../utils/seed";
 
-export const seed = async (): Promise<void> => {
-  const dbIsNotEmpty = await Acronym.findOne();
-  if (dbIsNotEmpty) return;
-
-  try {
-    const data = readFileSync(join(__dirname, "../../acronyms.json"), "utf-8");
-    const items: Record<string, string>[] = JSON.parse(data);
-
-    const promises: Promise<Acronym>[] = [];
-
-    for (const item of items) {
-      for (const [key, value] of Object.entries(item)) {
-        const acronym = Acronym.create({
-          acronym: key,
-          meaning: value,
-        });
-        promises.push(acronym.save());
-      }
-    }
-    await Promise.all(promises);
-    if (process.env.NODE_ENV !== "test") console.log("\n Database seeded 🌱✨");
-  } catch (e) {
-    console.log("Error reading file", e);
-  }
-};
+seed();
