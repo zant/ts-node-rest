@@ -9,11 +9,14 @@
   },
   "scripts": {
     "start": "npm run build && NODE_ENV=production node dist/src/server.js",
+    "docker:start": "npm run build && NODE_ENV=production __DOCKER__=true node dist/src/server.js",
     "dev": "NODE_ENV=development nodemon --exec ts-node src/server.ts",
     "test": "NODE_ENV=test jest --config jest.config.json --watch --detectOpenHandles --testTimeout=15000 --runInBand",
     "build": "tsc",
-    "populate": "NODE_ENV=development ts-node src/scripts/populateDb",
-    "genTest": "ts-node src/scripts/genTest.ts"
+    "genTest": "ts-node src/scripts/genTest.ts",
+    "dev:seed": "NODE_ENV=development ts-node src/scripts/seed.ts",
+    "prod:seed": "NODE_ENV=production node dist/src/scripts/seed.js",
+    "docker:seed": "NODE_ENV=production __DOCKER__=true node dist/src/scripts/seed.js"
   },
   "author": "Gonzalo Rodriguez",
   "license": "MIT",
