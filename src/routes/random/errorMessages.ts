@@ -1,1 +1,1 @@
-const invalidCount = "count should be a number";
+export const invalidCount = "count should be a number";

@@ -3,6 +3,7 @@ import request from "supertest";
 import { Connection } from "typeorm";
 import acronyms from "../../acronyms.json";
 import { createApp } from "../app";
+import { invalidCount } from "../routes/random/errorMessages";
 import { seed } from "../scripts/seed";
 import { Maybe } from "../types";
 import { removeIds } from "../utils/convertData";
@@ -43,6 +44,16 @@ describe("GET /random", () => {
 
     expect(isSubArray(acronyms, acronymsResponse)).toBe(false);
     expect(acronymsResponse.length).toBe(count);
+  });
+
+  it("Returns error if param is NaN", async () => {
+    const count = "hola";
+    const url = `/random/${count}`;
+    const response = await request(app).get(url);
+    expect(response.status).toEqual(400);
+    expect(response.body.errors).toEqual([
+      { message: invalidCount, path: url },
+    ]);
   });
 });
 
