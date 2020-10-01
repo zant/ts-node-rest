@@ -25,7 +25,7 @@ beforeAll(async () => {
 });
 
 describe("Login", () => {
-  it.skip("Should login valid user", async () => {
+  it("Should login valid user", async () => {
     const response = await request(app).post("/user/login").send(userData);
     const { user, token, expiryTime } = response.body;
 
@@ -42,9 +42,8 @@ describe("Login", () => {
     expect(expiryTime).toBe(ACCESS_EXPIRY_TIME);
 
     const cookie = response.headers["set-cookie"][0];
-    const [name, refreshToken] = cookieParser(cookie)[0];
-    expect(name).toEqual("_qid");
-    expect(verify(refreshToken, refreshTokenSecret)).toBeTruthy();
+    const { _qid } = cookieParser(cookie);
+    expect(verify(_qid, refreshTokenSecret)).toBeTruthy();
   });
   it("Show return invalid login if user does not exists", async () => {
     const path = `/user/login`;
