@@ -4,6 +4,8 @@ This is my submission for G2i's Node Test.
 
 The technologies I used are Typescript, Express as the main framework for the server. PostgreSQL for the DB and TypeORM to query and model the DB. And Jest for testing.
 
+---
+
 ## Bootstrap
 
 **See below for running with Docker**
@@ -35,6 +37,8 @@ If it's the first time running the app, you'll need to seed the DB with the acro
   npm run prod:seed
 ```
 
+---
+
 ## Tests
 
 Run with
@@ -60,6 +64,8 @@ Tests for each item of the requirement list is written below. There is a test fo
   - `tests.deleteAcronym.test.ts`
   - uses an authorization header: `tests/authentication.test.ts`
 
+---
+
 ## Running with docker
 
 This are the commands to run with docker and docker-compose:
@@ -72,12 +78,14 @@ This are the commands to run with docker and docker-compose:
 If it's your first time running the app, you'll need to seed the DB.
 
 ```
-  docker-compose exec web "npm run docker:seed"
+  docker-compose exec web npm run docker:seed
 ```
 
 **Troubleshooting**
 
 There's an issue when `docker-compose up` is first ran, that appears to be related to the DB not beign ready yet and the server starting already. If the app does not work correctly on the first run, please stop the container and run again, it should work nicely.
+
+---
 
 ## Example cURL requests
 
