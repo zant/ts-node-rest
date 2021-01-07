@@ -8,7 +8,7 @@ The technologies I used are Typescript, Express as the main framework for the se
 
 **See below for running with Docker**
 
-For this application to work, Node and PostgreSQL are needed. You'll need to create a database named `g2i-node-gonzachr` and `g2i-node-gonzachr-test` for the test suites.
+For this application to work, Node and PostgreSQL are needed. You'll need to create a database named `ts-node-zant` and `ts-node-zant-test` for the test suites.
 
 Then run:
 
@@ -69,7 +69,7 @@ Tests for each item of the requirement list is written below. There is a test fo
 This are the commands to run with docker and docker-compose:
 
 ```
-  docker build --tag g2i-node-gonzachr .
+  docker build --tag ts-node-zant .
   docker-compose up
 ```
 
