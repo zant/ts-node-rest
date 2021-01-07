@@ -102,7 +102,7 @@ curl -X DELETE http://localhost:4000/acronym/TTYL
 Login:
 
 ```
- curl -d '{"email":"user@g2i.co", "password":"pass1234"}' -H "Content-Type: application/json" -X POST http://localhost:4000/user/login
+ curl -d '{"email":"user@github.co", "password":"pass1234"}' -H "Content-Type: application/json" -X POST http://localhost:4000/user/login
 ```
 
 Authorized deleting:
