@@ -1,12 +1,9 @@
 {
-  "name": "g2i-node-test",
+  "name": "ts-node-rest",
   "version": "1.0.0",
   "main": "dist/index.js",
   "module": "esnext",
-  "description": "G2i's Node code challenge",
-  "repository": {
-    "url": "https://gist.github.com/gonzachr"
-  },
+  "description": "Toy Node/TS REST API",
   "scripts": {
     "start": "npm run build && NODE_ENV=production node dist/src/server.js",
     "docker:start": "npm run build && NODE_ENV=production __DOCKER__=true node dist/src/server.js",
