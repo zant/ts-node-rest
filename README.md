@@ -1,6 +1,4 @@
-# G2i Node Test
-
-This is my submission for G2i's Node Test.
+# Toy Node.js/Typescript REST API
 
 The technologies I used are Typescript, Express as the main framework for the server. PostgreSQL for the DB and TypeORM to query and model the DB. And Jest for testing.
 
